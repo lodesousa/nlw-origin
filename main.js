@@ -1,0 +1,115 @@
+//ABRIR E FECHAR MENU//
+const nav = document.querySelector('#header nav')
+const toggle = document.querySelectorAll('nav .toggle')
+for (const element of toggle) {
+  element.addEventListener('click', function() {
+    nav.classList.toggle('show')
+  })
+} 
+//ESCONDER O MENU AO CLINCAR EM ALGUM ITEM//
+const links = document.querySelectorAll('nav ul li a')
+for(const link of links) {
+  link.addEventListener('click', function(){
+    nav.classList.remove('show')
+  })
+}
+//MUDAR O HEADER DA PAG QUANDO DAR SCROLL//
+
+  const header = document.querySelector('#header')
+  const navHeight = header.offsetHeight
+  function changeHeaderWhenScroll() {
+    if(window.scrollY >= navHeight) { 
+      header.classList.add('scroll')
+  }else {
+    //MENOR QUE A ALTURA DO HEADER//
+    header.classList.remove('scroll')
+  }
+}
+//PORQUE O SCROLLY?? -> PORQUE DESLOCOU NO EIXO VERTICAL - SCROLL MAIOR QUE A ALTURA DO HEADER//
+    
+window.addEventListener('scroll', function(){
+  
+
+})
+
+  
+  
+//TESTIMONIALS SLIDER//
+const swiper = new Swiper('.swiper-container', {
+  slidesPerView: 1,
+  pagination: {
+    el: '.swiper-pagination'
+  },
+  mousewheel: true,
+  keyboard: true,
+  breakpoints: {
+    767: {
+      slidesPerView: 2,
+      setWrapperSize: true
+    }
+  } 
+})
+
+//SCROLL REVEAL//
+const scrollReveal = scrollReveal({
+  origin: 'top',
+  distance: '30px',
+  duration: 700,
+  reset: true
+})
+
+scrollReveal.reveal(
+  `#home .image, #home .text,
+  #services header, #services .card,
+  #about .image, #about .text,
+  #contact .text, #contact .links
+  footer .brand, footer .social
+  #testimonials header, #testimonials .testimonials
+  `, 
+  { interval: 100 }
+)
+//BACK TO TOP BUTTON//
+function backToTop() {
+  const backToTopButton = document.querySelector('.back-to-top')
+  
+  if(window.scrollY >= 560) {
+    backToTopButton.classList.add('show')
+  } else {
+    backToTopButton.classList.remove('show')
+  }
+}
+//MENU ATIVO CONFORME A SEÇÃO VISIVEL DA PÁGINA//
+const sections = document.querySelectorAll('main section[id]')
+function activateMenuAtCurrentSection() {
+
+  const checkpoint = window.pageYOffset + (window.innerHeight / 8) *4 
+  for( const section of sections ) {
+    const sectionTop = section.offsetTop
+    const sectionHeight = section.offsetHeight
+    const sectionId = section.getAttribute('id')
+
+    const checkpointStart = checkpoint >= sectionTop
+    const checkpointEnd = checkpoint <= sectionTop + sectionHeight
+
+    if(checkpointStart && checkpointEnd) {
+      document
+        .querySelector('nav ul li a[href*=' + sectionId +']')
+        .classList.add('active')
+        
+    } else {
+      document
+        .querySelector('nav ul li a[href*=' + sectionId +']')
+        .classList.remove('active')
+    }
+
+  }
+}
+//ELE CHEGOU NESSES NÚMEROS TESTANDO. MAS TESTANDO OQ?//
+//WHEN SCROLL//
+window.addEventListener('scroll', function () {
+  changeHeaderWhenScroll()
+  backToTop()
+  activateMenuAtCurrentSection()
+})
+//MENU ATIVO CONFORME A SEÇÃO VISIVEL DA PÁGINA//
+
